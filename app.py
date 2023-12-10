@@ -9,7 +9,7 @@ def create_app():
 
     @app.route('/version')
     def version():
-        version = {'name': 'Kim JeongTae', 'version': '0.0.1'}
+        version = {'name': 'Kim JeongTae', 'version': '0.0.2'}
         return jsonify(version)
     
     return app
