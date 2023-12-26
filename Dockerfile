@@ -2,7 +2,7 @@ FROM public.ecr.aws/docker/library/golang:alpine AS builder
 
 WORKDIR /build
 
-COPY main.go ./
+COPY go.mod main.go ./
 
 RUN go build -o main .
 
