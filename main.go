@@ -20,7 +20,7 @@ type ColorResponse struct {
 
 // Colors is a slice of color names.
 var Colors = []string{
-	"Red", "Green", "Blue"
+	"Red", "Green", "Blue",
 }
 
 func main() {
