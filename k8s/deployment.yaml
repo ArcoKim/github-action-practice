@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: color
+spec:
+  selector:
+    matchLabels:
+      app: skills
+  template:
+    metadata:
+      labels:
+        app: skills
+    spec:
+      nodeSelector:
+        node: app
+      tolerations:
+      - key: node
+        operator: Equal
+        value: app
+        effect: NoSchedule
+      containers:
+      - name: color
+        image: 073813292468.dkr.ecr.ap-northeast-2.amazonaws.com/color:0.0.1
+        resources:
+          requests:
+            cpu: 500m
+            memory: 256Mi
+          limits:
+            cpu: 1
+            memory: 512Mi
+        ports:
+        - containerPort: 8080
