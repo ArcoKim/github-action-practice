@@ -11,6 +11,7 @@ env:
   ECR_REPOSITORY: color
   ECS_SERVICE: color-svc
   ECS_CLUSTER: demo-cluster
+  TD_NAME: color-td
   CONTAINER_NAME: color
 
 jobs:
@@ -44,7 +45,7 @@ jobs:
 
       - name: Download task definition
         run: |
-          aws ecs describe-task-definition --task-definition test_task --query taskDefinition > task-definition.json
+          aws ecs describe-task-definition --task-definition $TD_NAME --query taskDefinition > task-definition.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
