@@ -4,19 +4,23 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 env:
   AWS_REGION: ap-northeast-2
   ECR_REPOSITORY: color
-  ECS_SERVICE: color-svc
   ECS_CLUSTER: demo-cluster
-  TD_NAME: color-td
+  ECS_SERVICE: color-svc
+  ECS_TD: color-td
   CONTAINER_NAME: color
+  ECS_APP: AppECS-demo-cluster-color-svc
+  ECS_DG: DgpECS-demo-cluster-color-svc
+  ECS_APPSPEC: appspec.yml
 
 jobs:
   deploy:
+    name: Deploy
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
       - name: Checkout
@@ -45,7 +49,7 @@ jobs:
 
       - name: Download task definition
         run: |
-          aws ecs describe-task-definition --task-definition $TD_NAME --query taskDefinition > task-definition.json
+          aws ecs describe-task-definition --task-definition ${{ env.ECS_TD }} --query taskDefinition > task-definition.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
@@ -62,3 +66,6 @@ jobs:
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
+          codedeploy-appspec: ${{ env.ECS_APPSPEC }}
+          codedeploy-application: ${{ env.ECS_APP }}
+          codedeploy-deployment-group: ${{ env.ECS_DG }}
